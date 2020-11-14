@@ -1,7 +1,7 @@
 package juego;
 
 /**
- * Juego Cuatro en LÌ≠nea
+ * Juego Cuatro en L√≠¬≠nea
  * 
  * Reglas:
  * 
@@ -22,7 +22,7 @@ public class CuatroEnLinea {
 	 * post: empieza el juego entre el jugador que tiene fichas rojas, identificado como 
 	 * 		 'jugadorRojo' y el jugador que tiene fichas amarillas, identificado como
 	 * 		 'jugadorAmarillo'. 
-	 * 		 Todo el tablero est· vacÌo.
+	 * 		 Todo el tablero est√° vac√≠o.
 	 * 
 	 * @param filas : cantidad de filas que tiene el tablero.
 	 * @param columnas : cantidad de columnas que tiene el tablero.
@@ -30,46 +30,44 @@ public class CuatroEnLinea {
 	 * @param jugadorAmarillo : nombre del jugador con fichas amarillas.
 	 */
 	public CuatroEnLinea(int filas, int columnas, String jugadorRojo, String jugadorAmarillo) {
-		cantidadDeFilas = contarFilas(filas);
-		cantidadDeColumnas = contarColumnas(columnas);
-		tablero = new Casillero[filas][columnas];
+		esValido(filas, columnas);
+		cantidadDeFilas = contarFilas();
+		cantidadDeColumnas = contarColumnas();
 		todosVacios();
 		
 	}
 	
 	/**
-	 * post: Analiza si el "numeroCandidato" es mayor que 3 y menor que 99, si lo es,
-	 * 		 lo toma como valido y sino lo descarta.
+	 * post: Analiza si el "numeroCandidato" es mayor que 3 y menor que 99, si
+	 * lo es, lo toma como valido y sino lo descarta.
 	 */
-	private int esValido(int numeroCandidato){
-		if(numeroCandidato > 3 && numeroCandidato < 99){
-			return numeroCandidato;
-		} else{
-			Error numeroInvalido = new Error("El numero de columnas y filas"
+	private void esValido(int filas, int columnas) {
+		if (filas < 4 || filas > 99 || columnas < 4 || columnas > 99) {
+			throw new Error("El numero de columnas y filas"
 					+ " deben ser mayor de 3 y menor de 100");
-			throw numeroInvalido;
 		}
+		tablero = new Casillero[filas][columnas];
+
 	}
-	
 	/**
-	 * post: devuelve la cantidad m·xima de fichas que se pueden apilar en el tablero.
+	 * post: devuelve la cantidad m√°xima de fichas que se pueden apilar en el tablero.
 	 */
-	public int contarFilas(int filas) {
-		return esValido(filas);
+	public int contarFilas() {
+		return tablero.lenght;
 	}
 
 	/**
-	 * post: devuelve la cantidad m·xima de fichas que se pueden alinear en el tablero.
+	 * post: devuelve la cantidad m√°xima de fichas que se pueden alinear en el tablero.
 	 */
-	public int contarColumnas(int columnas) {
+	public int contarColumnas() {
 		
-		return esValido(columnas);
+		return tablero[0].length;
 	}
 
 	/**
-	 * pre : fila est· en el intervalo [1, contarFilas()],
-	 * 		 columnas est· en el intervalo [1, contarColumnas()].
-	 * post: indica quÈ ocupa el casillero en la posiciÛn dada por fila y columna.
+	 * pre : fila est√° en el intervalo [1, contarFilas()],
+	 * 		 columnas est√° en el intervalo [1, contarColumnas()].
+	 * post: indica qu√© ocupa el casillero en la posici√≥n dada por fila y columna.
 	 * 
 	 * @param fila
 	 * @param columna
@@ -88,8 +86,8 @@ public class CuatroEnLinea {
 	}
 	
 	/**
-	 * pre : el juego no terminÛ, columna est· en el intervalo [1, contarColumnas()]
-	 * 		 y a˙n queda un Casillero.VACIO en la columna indicada. 
+	 * pre : el juego no termin√≥, columna est√° en el intervalo [1, contarColumnas()]
+	 * 		 y a√∫n queda un Casillero.VACIO en la columna indicada. 
 	 * post: deja caer una ficha en la columna indicada.
 	 * 
 	 * @param columna
@@ -117,8 +115,8 @@ public class CuatroEnLinea {
 	}
 	
 	/**
-	 * post: indica si el juego terminÛ porque uno de los jugadores
-	 * 		 ganÛ o no existen casilleros vacÌos.
+	 * post: indica si el juego termin√≥ porque uno de los jugadores
+	 * 		 gan√≥ o no existen casilleros vac√≠os.
 	 */
 	public boolean termino() {
 		
@@ -126,7 +124,7 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * post: indica si el juego terminÛ y tiene un ganador.
+	 * post: indica si el juego termin√≥ y tiene un ganador.
 	 */
 	public boolean hayGanador() {
 		
@@ -134,8 +132,8 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * pre : el juego terminÛ.
-	 * post: devuelve el nombre del jugador que ganÛ el juego.
+	 * pre : el juego termin√≥.
+	 * post: devuelve el nombre del jugador que gan√≥ el juego.
 	 */
 	public String obtenerGanador() {
 		
