@@ -9,9 +9,6 @@ package juego;
  *
  */
 public class CuatroEnLinea {
-	public int cantidadDeFilas = 4;
-	public int cantidadDeColumnas = 4;
-	
 	private boolean turno = true;
 	
 	private Casillero[][] tablero;
@@ -30,9 +27,7 @@ public class CuatroEnLinea {
 	 * @param jugadorAmarillo : nombre del jugador con fichas amarillas.
 	 */
 	public CuatroEnLinea(int filas, int columnas, String jugadorRojo, String jugadorAmarillo) {
-		cantidadDeFilas = contarFilas(filas);
-		cantidadDeColumnas = contarColumnas(columnas);
-		tablero = new Casillero[filas][columnas];
+		tablero = new Casillero[esValido(filas)][esValido(columnas)];
 		todosVacios();
 		
 	}
@@ -42,28 +37,26 @@ public class CuatroEnLinea {
 	 * 		 lo toma como valido y sino lo descarta.
 	 */
 	private int esValido(int numeroCandidato){
-		if(numeroCandidato > 3 && numeroCandidato < 99){
-			return numeroCandidato;
-		} else{
-			Error numeroInvalido = new Error("El numero de columnas y filas"
+		if(numeroCandidato < 3 || numeroCandidato > 99){
+			throw new Error("El numero de columnas y filas"
 					+ " deben ser mayor de 3 y menor de 100");
-			throw numeroInvalido;
 		}
+		return numeroCandidato;
 	}
 	
 	/**
 	 * post: devuelve la cantidad máxima de fichas que se pueden apilar en el tablero.
 	 */
-	public int contarFilas(int filas) {
-		return esValido(filas);
+	public int contarFilas() {
+		return tablero.length;
 	}
 
 	/**
 	 * post: devuelve la cantidad máxima de fichas que se pueden alinear en el tablero.
 	 */
-	public int contarColumnas(int columnas) {
+	public int contarColumnas() {
 		
-		return esValido(columnas);
+		return tablero[0].length;
 	}
 
 	/**
@@ -98,7 +91,7 @@ public class CuatroEnLinea {
 		
 	int i= 0;	
 	
-	while(i < cantidadDeFilas && tablero[i][columna -1] == Casillero.VACIO){
+	while(i < contarFilas() && tablero[i][columna -1] == Casillero.VACIO){
 		i++;
 	}
 	if((i-1) >=0){

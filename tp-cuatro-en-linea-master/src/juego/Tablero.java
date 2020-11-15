@@ -47,8 +47,8 @@ public class Tablero {
 		
 		dibujarBotones();
 		
-		double ancho = juego.cantidadDeColumnas  * ANCHO_COLUMNA;
-		double alto = (juego.cantidadDeFilas * ALTO_FILA) + ALTURA_BOTON;
+		double ancho = juego.contarColumnas()  * ANCHO_COLUMNA;
+		double alto = (juego.contarFilas() * ALTO_FILA) + ALTURA_BOTON;
 		
 		Scene escena = new Scene(grilla, ancho, alto);
 
@@ -66,7 +66,7 @@ public class Tablero {
 	 */
 	private void dibujarBotones() {
 		
-		for (int columna = 1; columna <= juego.cantidadDeColumnas; columna++) {
+		for (int columna = 1; columna <= juego.contarColumnas(); columna++) {
 
 			Button botonSoltarFicha = new Button("soltar");
 			botonSoltarFicha.setMinHeight(ALTURA_BOTON);
@@ -82,9 +82,9 @@ public class Tablero {
 	 */
 	public void dibujar() {
 
-		for (int fila = 1; fila <= juego.cantidadDeFilas; fila++) {
+		for (int fila = 1; fila <= juego.contarFilas(); fila++) {
 
-			for (int columna = 1; columna <= juego.cantidadDeColumnas; columna++) {
+			for (int columna = 1; columna <= juego.contarColumnas(); columna++) {
 
 				Casillero casillero = juego.obtenerCasillero(fila, columna);
 				
