@@ -1,7 +1,7 @@
 package juego;
 
 /**
- * Juego Cuatro en LÌ≠nea
+ * Juego Cuatro en L√≠¬≠nea
  * 
  * Reglas:
  * 
@@ -19,7 +19,7 @@ public class CuatroEnLinea {
 	 * post: empieza el juego entre el jugador que tiene fichas rojas, identificado como 
 	 * 		 'jugadorRojo' y el jugador que tiene fichas amarillas, identificado como
 	 * 		 'jugadorAmarillo'. 
-	 * 		 Todo el tablero est· vacÌo.
+	 * 		 Todo el tablero est√° vac√≠o.
 	 * 
 	 * @param filas : cantidad de filas que tiene el tablero.
 	 * @param columnas : cantidad de columnas que tiene el tablero.
@@ -32,63 +32,99 @@ public class CuatroEnLinea {
 		
 	}
 	
-	/**
-	 * post: Analiza si el "numeroCandidato" es mayor que 3 y menor que 99, si lo es,
-	 * 		 lo toma como valido y sino lo descarta.
+		/**
+	 * post: Analiza si el "numeroCandidato" es menor que 4 y mayor que 15, si
+	 * NO lo es, lo toma como valido y sino lo descarta.
+	 * 
+	 * @param numeroCandidato
+	 *            : numero candidato a columnas y filas m√°xima
+	 * @return devuelve numeroCandidato si cumple la condici√≥n
 	 */
-	private int esValido(int numeroCandidato){
-		if(numeroCandidato < 3 || numeroCandidato > 99){
+	private int esValido(int numeroCandidato) {
+		if (numeroCandidato < 4 || numeroCandidato > 15) {
 			throw new Error("El numero de columnas y filas"
-					+ " deben ser mayor de 3 y menor de 100");
+					+ " deben ser mayor de 4 y menor de 15");
 		}
 		return numeroCandidato;
 	}
 	
 	/**
-	 * post: devuelve la cantidad m·xima de fichas que se pueden apilar en el tablero.
+	 * post: devuelve la cantidad m√°xima de fichas que se pueden apilar en el tablero.
 	 */
 	public int contarFilas() {
 		return tablero.length;
 	}
 
 	/**
-	 * post: devuelve la cantidad m·xima de fichas que se pueden alinear en el tablero.
+	 * post: devuelve la cantidad m√°xima de fichas que se pueden alinear en el tablero.
 	 */
 	public int contarColumnas() {
 		
 		return tablero[0].length;
 	}
 
-	/**
-	 * pre : fila est· en el intervalo [1, contarFilas()],
-	 * 		 columnas est· en el intervalo [1, contarColumnas()].
-	 * post: indica quÈ ocupa el casillero en la posiciÛn dada por fila y columna.
+		/**
+	 * pre : fila est√° en el intervalo [1, contarFilas()], columnas est√° en el
+	 * intervalo [1, contarColumnas()]. post: indica qu√© ocupa el casillero en
+	 * la posici√≥n dada por fila y columna.
 	 * 
 	 * @param fila
+	 *            : n√∫mero de fila solicitado
 	 * @param columna
+	 *            : n√∫mero de columna solicitado
 	 */
 	public Casillero obtenerCasillero(int fila, int columna) {
-		
-		return tablero[fila-1][columna-1];
-				
-	}
-	
-	public void todosVacios(){
-		for(int i = 0; i < tablero.length; i++){
-			for(int j = 0; j < tablero[i].length; j++)
+		condicionParafila(fila);
+		condicionParaColumna(columna);
+
+		return tablero[fila - 1][columna - 1];
+
+		/**
+	 * Post: Genera que todos los casilleros se inicialicen en VACIO
+	 */
+	private void todosVacios() {
+		for (int i = 0; i < tablero.length; i++) {
+			for (int j = 0; j < tablero[i].length; j++)
 				tablero[i][j] = Casillero.VACIO;
 		}
 	}
-	
+		
+		/**
+	 * Post : Analiza si el n√∫mero de fila sobrepasa la cantidad de filas
+	 * m√°ximas que tiene el tablero
+	 * 
+	 * @param fila
+	 *            : n√∫mero de fila solicitada
+	 */
+	private void condicionParafila(int fila) {
+		if (fila < 1 || fila > tablero.length) {
+			throw new Error("La fila que est√° buscando no existe");
+		}
+	}
+
 	/**
-	 * pre : el juego no terminÛ, columna est· en el intervalo [1, contarColumnas()]
-	 * 		 y a˙n queda un Casillero.VACIO en la columna indicada. 
-	 * post: deja caer una ficha en la columna indicada.
+	 * Post : Analiza si el n√∫mero de columna sobrepasa la cantidad de columnas
+	 * m√°ximas que tiene el tablero
 	 * 
 	 * @param columna
+	 *            : n√∫mero de columna solicitada
+	 */
+	private void condicionParaColumna(int columna) {
+		if (columna < 1 || columna > tablero[0].length) {
+			throw new Error("La columna que est√° buscando no existe");
+		}
+	}
+
+	
+	/**
+	 * pre : el juego no termin√≥, columna est√° en el intervalo [1, contarColumnas()]
+	 * 		 y a√∫n queda un Casillero.VACIO en la columna indicada. 
+	 * post: deja caer una ficha en la columna indicada.
+	 * 
+	 * @param columna : n√∫mero de columna en la que se quiere soltar ficha
 	 */
 	public void soltarFichaEnColumna(int columna) {
-		
+	condicionParaColumna(columna);	
 	int i= 0;	
 	
 	while(i < contarFilas() && tablero[i][columna -1] == Casillero.VACIO){
@@ -103,15 +139,15 @@ public class CuatroEnLinea {
 			turno = true;
 		}
 	} else {
-		Error ColumnaCompleta = new Error("La columna ya esta llena, intente con otra");
-		throw ColumnaCompleta;
+		throw new Error("La columna ya esta llena, intente con otra");
+	
 	}
 		
 	}
 	
 	/**
-	 * post: indica si el juego terminÛ porque uno de los jugadores
-	 * 		 ganÛ o no existen casilleros vacÌos.
+	 * post: indica si el juego termin√≥ porque uno de los jugadores
+	 * 		 gan√≥ o no existen casilleros vac√≠os.
 	 */
 	public boolean termino() {
 		
@@ -119,7 +155,7 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * post: indica si el juego terminÛ y tiene un ganador.
+	 * post: indica si el juego termin√≥ y tiene un ganador.
 	 */
 	public boolean hayGanador() {
 		
@@ -127,8 +163,8 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * pre : el juego terminÛ.
-	 * post: devuelve el nombre del jugador que ganÛ el juego.
+	 * pre : el juego termin√≥.
+	 * post: devuelve el nombre del jugador que gan√≥ el juego.
 	 */
 	public String obtenerGanador() {
 		
