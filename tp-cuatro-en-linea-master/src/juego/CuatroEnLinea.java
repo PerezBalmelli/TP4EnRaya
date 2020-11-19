@@ -160,7 +160,7 @@ public class CuatroEnLinea {
 	 * post: indica si queda algún casillero libre o el tablero esta lleno.
 	 */
 	private boolean noHayCasillerosLibres(){
-		int i = 1;
+		int i = 0;
 		while(i < contarColumnas() && tablero[0][i] != Casillero.VACIO){
 			i++;
 		}
@@ -168,51 +168,130 @@ public class CuatroEnLinea {
 		return i == contarColumnas();
 	}
 	
-	private int esValidoParaGanadorFila(int cambio){
-		int posicionFinal = filaUltimaFicha + cambio;
-		if(filaUltimaFicha + cambio < 0){
-			posicionFinal = 0;
-		}
-		if(filaUltimaFicha + cambio > tablero.length){
-			posicionFinal = tablero.length;
-		}
-		return posicionFinal;
-	}
-	
-	private int esValidoParaGanadorColumna(int cambio){
-		int posicionFinal = columnaUltimaFicha + cambio;
-			if(posicionFinal < 0){
-				posicionFinal = 0;
-			}
-			
-			
-		return posicionFinal;
-	}
-	
-	
-	private int revisarSiHayGanador(int fila, int columna, int cambiaFila, int cambiaColumna){
-		fila = esValidoParaGanadorFila(fila);
-		columna = esValidoParaGanadorColumna(columna);
-		
+
+	private boolean hayGanadorPorFila() {
+
 		int fichasContiguas = 0;
-		
-		while(fichasContiguas < 4 && fila < contarFilas() && columna < contarColumnas()){
-			
-			if(tablero[fila][columna] == tablero[filaUltimaFicha][columnaUltimaFicha]){
+
+		int columna = 0;
+
+		while (fichasContiguas < 4 && columna < contarColumnas()) {
+
+			if (tablero[filaUltimaFicha][columna] == tablero[filaUltimaFicha][columnaUltimaFicha]) {
+
 				fichasContiguas++;
-			} else{
+
+			} else {
+
 				fichasContiguas = 0;
+
 			}
-			fila = fila + cambiaFila;
-			columna = columna + cambiaColumna;
-			
-		}
-		if(fichasContiguas < 4){
-			fichasContiguas = 0;
+
+			columna++;
+
 		}
 
+		return fichasContiguas == 4;
+
+	}
+
+	private boolean hayGanadorPorColumna() {
+
+		int fichasContiguas = 0;
+
+		int fila = contarFilas() - 1 ;
+
+		while (fichasContiguas < 4 && fila>=0 && tablero[fila][columnaUltimaFicha]!=Casillero.VACIO) {
+
+			if (tablero[fila][columnaUltimaFicha] == tablero[filaUltimaFicha][columnaUltimaFicha]) {
+
+				fichasContiguas++;
+
+			} else {
+
+				fichasContiguas = 0;
+
+			}
+
+			fila--;
+
+		}
+
+		return fichasContiguas == 4;
+
+	}
+	
+	private boolean hayGanadorPorDiagonalIzquierdaADerecha() {
+
+		int fichasContiguas = 0;
+
+		int fila = filaUltimaFicha;
+		int columna = columnaUltimaFicha;
 		
-		return fichasContiguas;
+		if(tablero[filaUltimaFicha][columnaUltimaFicha] != Casillero.VACIO){
+			
+		
+		while(fila > 0 && columna > 0){
+			fila--;
+			columna--;
+		}
+
+		while (fichasContiguas < 4 && fila < contarFilas() && columna < contarColumnas()) {
+
+			if (tablero[fila][columna] == tablero[filaUltimaFicha][columnaUltimaFicha]) {
+
+				fichasContiguas++;
+
+			} else {
+
+				fichasContiguas = 0;
+
+			}
+
+			fila++;
+			columna++;
+
+		}
+		}
+
+		return fichasContiguas == 4;
+
+	}
+	
+	private boolean hayGanadorPorDiagonalDerechaAIzquierda() {
+
+		int fichasContiguas = 0;
+
+		int fila = filaUltimaFicha;
+		int columna = columnaUltimaFicha;
+		
+		if(tablero[filaUltimaFicha][columnaUltimaFicha] != Casillero.VACIO){
+		
+		while(fila > 0 && columna < contarColumnas()-1){
+			fila--;
+			columna++;
+		}
+
+		while (fichasContiguas < 4 && fila < contarFilas() && columna > -1) {
+
+			if (tablero[fila][columna] == tablero[filaUltimaFicha][columnaUltimaFicha]) {
+
+				fichasContiguas++;
+
+			} else {
+
+				fichasContiguas = 0;
+
+			}
+
+			fila++;
+			columna--;
+
+		}
+		}
+
+		return fichasContiguas == 4;
+
 	}
 	
 	/**
@@ -230,12 +309,8 @@ public class CuatroEnLinea {
 	 */
 	public boolean hayGanador() {
 		
-		int i =  revisarSiHayGanador(0, -4, 0, 1);
-		i += revisarSiHayGanador(-4, 0, 1, 0);
-		
-		
-		
-		return i >= 4;
+		return hayGanadorPorDiagonalIzquierdaADerecha() || hayGanadorPorDiagonalDerechaAIzquierda() ||
+				hayGanadorPorColumna() ||  hayGanadorPorFila();
 	}
 
 	/**
@@ -243,11 +318,15 @@ public class CuatroEnLinea {
 	 * post: devuelve el nombre del jugador que ganó el juego.
 	 */
 	public String obtenerGanador() {
-		if(turno == false){
-			return nombreJugadorRojo;
-		} else{
-			return nombreJugadorAmarillo;
+		String ganador = null;
+		if(termino()){
+			if(!turno){
+				ganador = nombreJugadorRojo;
+			} else{
+				ganador = nombreJugadorAmarillo;
+			}
+			
 		}
-		
+		return ganador;
 	}
 }
