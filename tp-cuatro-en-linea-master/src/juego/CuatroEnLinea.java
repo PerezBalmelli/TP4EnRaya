@@ -11,6 +11,9 @@ package juego;
 public class CuatroEnLinea {
 	private boolean turno = true;
 	
+	String nombreJugadorRojo = "Rojo";
+	String nombreJugadorAmarillo = "Amarillo";
+	
 	int columnaUltimaFicha;
 	int filaUltimaFicha;
 	
@@ -32,6 +35,9 @@ public class CuatroEnLinea {
 	public CuatroEnLinea(int filas, int columnas, String jugadorRojo, String jugadorAmarillo) {
 		tablero = new Casillero[esValido(filas)][esValido(columnas)];
 		todosVacios();
+		
+		nombreJugadorRojo = jugadorRojo;
+		nombreJugadorAmarillo = jugadorAmarillo;
 		
 	}
 	
@@ -154,12 +160,12 @@ public class CuatroEnLinea {
 	 * post: indica si queda algún casillero libre o el tablero esta lleno.
 	 */
 	private boolean noHayCasillerosLibres(){
-		int i = 0;
-		while(i < contarFilas() && tablero[0][i] != Casillero.VACIO){
+		int i = 1;
+		while(i < contarColumnas() && tablero[0][i] != Casillero.VACIO){
 			i++;
 		}
 		
-		return i == contarFilas();
+		return i == contarColumnas();
 	}
 	
 	private int esValidoParaGanadorFila(int cambio){
@@ -226,7 +232,7 @@ public class CuatroEnLinea {
 		
 		int i =  revisarSiHayGanador(0, -4, 0, 1);
 		i += revisarSiHayGanador(-4, 0, 1, 0);
-		i += revisarSiHayGanador(-4, -4, 1, 1);
+		
 		
 		
 		return i >= 4;
@@ -237,7 +243,11 @@ public class CuatroEnLinea {
 	 * post: devuelve el nombre del jugador que ganó el juego.
 	 */
 	public String obtenerGanador() {
+		if(turno == false){
+			return nombreJugadorRojo;
+		} else{
+			return nombreJugadorAmarillo;
+		}
 		
-		return null;
 	}
 }
