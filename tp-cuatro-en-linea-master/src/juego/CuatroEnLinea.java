@@ -11,6 +11,9 @@ package juego;
 public class CuatroEnLinea {
 	private boolean turno = true;
 	
+	int columnaUltimaFicha;
+	int filaUltimaFicha;
+	
 	private Casillero[][] tablero;
 	
 
@@ -78,6 +81,7 @@ public class CuatroEnLinea {
 		condicionParaColumna(columna);
 
 		return tablero[fila - 1][columna - 1];
+	}
 
 		/**
 	 * Post: Genera que todos los casilleros se inicialicen en VACIO
@@ -142,16 +146,77 @@ public class CuatroEnLinea {
 		throw new Error("La columna ya esta llena, intente con otra");
 	
 	}
+	columnaUltimaFicha = columna-1;
+	filaUltimaFicha = i-1;
+	}
+	
+	/**
+	 * post: indica si queda algún casillero libre o el tablero esta lleno.
+	 */
+	private boolean noHayCasillerosLibres(){
+		int i = 0;
+		while(i < contarFilas() && tablero[0][i] != Casillero.VACIO){
+			i++;
+		}
 		
+		return i == contarFilas();
+	}
+	
+	private int esValidoParaGanadorFila(int cambio){
+		int posicionFinal = filaUltimaFicha + cambio;
+		if(filaUltimaFicha + cambio < 0){
+			posicionFinal = 0;
+		}
+		if(filaUltimaFicha + cambio > tablero.length){
+			posicionFinal = tablero.length;
+		}
+		return posicionFinal;
+	}
+	
+	private int esValidoParaGanadorColumna(int cambio){
+		int posicionFinal = columnaUltimaFicha + cambio;
+			if(posicionFinal < 0){
+				posicionFinal = 0;
+			}
+			
+			
+		return posicionFinal;
+	}
+	
+	
+	private int revisarSiHayGanador(int fila, int columna, int cambiaFila, int cambiaColumna){
+		fila = esValidoParaGanadorFila(fila);
+		columna = esValidoParaGanadorColumna(columna);
+		
+		int fichasContiguas = 0;
+		
+		while(fichasContiguas < 4 && fila < contarFilas() && columna < contarColumnas()){
+			
+			if(tablero[fila][columna] == tablero[filaUltimaFicha][columnaUltimaFicha]){
+				fichasContiguas++;
+			} else{
+				fichasContiguas = 0;
+			}
+			fila = fila + cambiaFila;
+			columna = columna + cambiaColumna;
+			
+		}
+		if(fichasContiguas < 4){
+			fichasContiguas = 0;
+		}
+
+		
+		return fichasContiguas;
 	}
 	
 	/**
 	 * post: indica si el juego terminó porque uno de los jugadores
 	 * 		 ganó o no existen casilleros vacíos.
 	 */
+	
 	public boolean termino() {
 		
-		return false;
+		return hayGanador() || noHayCasillerosLibres();
 	}
 
 	/**
@@ -159,7 +224,12 @@ public class CuatroEnLinea {
 	 */
 	public boolean hayGanador() {
 		
-		return false;
+		int i =  revisarSiHayGanador(0, -4, 0, 1);
+		i += revisarSiHayGanador(-4, 0, 1, 0);
+		i += revisarSiHayGanador(-4, -4, 1, 1);
+		
+		
+		return i >= 4;
 	}
 
 	/**
