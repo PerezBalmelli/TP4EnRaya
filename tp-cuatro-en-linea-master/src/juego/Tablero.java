@@ -46,7 +46,6 @@ public class Tablero {
 	public void mostrar() {
 		
 		dibujarBotones();
-		dibujarBotonRetroceder();
 		
 		double ancho = juego.contarColumnas()  * ANCHO_COLUMNA;
 		double alto = (juego.contarFilas() * ALTO_FILA) + ALTURA_BOTON;
@@ -77,18 +76,6 @@ public class Tablero {
 			grilla.add(botonSoltarFicha, columna - 1, 0);
 		}
 	}
-	
-	private void dibujarBotonRetroceder() {
-		
-
-			Button botonRetroceder = new Button("Retroceder");
-			botonRetroceder.setMinHeight(ALTURA_BOTON);
-
-			botonRetroceder.setOnAction(new RetrocederJugada(this, juego));
-			botonRetroceder.setMinWidth(ANCHO_COLUMNA);
-			grilla.add(botonRetroceder, 0, juego.contarFilas() +1, 1, 1);
-	}
-	
 	
 	/**
 	 * post: actualiza el Tablero a partir del estado del juego asociado.
