@@ -14,12 +14,12 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- * Representación gráfica del Tablero del Juego Cuatro en Lí­nea.
+ * RepresentaciÃ³n grÃ¡fica del Tablero del Juego Cuatro en LÃ­Â­nea.
  * 
  */
 public class Tablero {
 
-	private static final int ALTO_FILA = 80;
+	private static final int ALTO_FILA = 85;
 	private static final int ANCHO_COLUMNA = 80;
 	private static final int ALTURA_BOTON = 40;
 	private static final double RADIO = Math.min(ALTO_FILA - 1, ANCHO_COLUMNA - 1) / 2;
@@ -46,6 +46,7 @@ public class Tablero {
 	public void mostrar() {
 		
 		dibujarBotones();
+		dibujarBotonRetroceder();
 		
 		double ancho = juego.contarColumnas()  * ANCHO_COLUMNA;
 		double alto = (juego.contarFilas() * ALTO_FILA) + ALTURA_BOTON;
@@ -77,6 +78,18 @@ public class Tablero {
 		}
 	}
 	
+	private void dibujarBotonRetroceder() {
+		
+
+			Button botonRetroceder = new Button("Retroceder");
+			botonRetroceder.setMinHeight(ALTURA_BOTON);
+
+			botonRetroceder.setOnAction(new RetrocederJugada(this, juego));
+			botonRetroceder.setMinWidth(ANCHO_COLUMNA);
+			grilla.add(botonRetroceder, 0, juego.contarFilas() +1, 1, 1);
+	}
+	
+	
 	/**
 	 * post: actualiza el Tablero a partir del estado del juego asociado.
 	 */
@@ -99,7 +112,7 @@ public class Tablero {
 	 * post: dibuja y devuelve el casillero dado.
 	 * 
 	 * @param casillero
-	 * @return representación gráfica del Casillero.
+	 * @return representaciÃ³n grÃ¡fica del Casillero.
 	 */
 	private Circle dibujarCasillero(Casillero casillero) {
 		
@@ -139,7 +152,7 @@ public class Tablero {
 	}
 
 	/**
-	 * pre : el juego asociado terminó.
+	 * pre : el juego asociado terminÃ³.
 	 * post: muestra un mensaje indicando el resultado del juego.
 	 */
 	public void mostrarResultado() {
@@ -153,7 +166,7 @@ public class Tablero {
 		
 		if (juego.hayGanador()) {
 		
-			textoResultado = new Text("Ganó el jugador " + juego.obtenerGanador());
+			textoResultado = new Text("GanÃ³ el jugador " + juego.obtenerGanador());
 			
 		} else {
 			
