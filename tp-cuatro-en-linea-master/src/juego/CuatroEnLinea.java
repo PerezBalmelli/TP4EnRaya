@@ -155,14 +155,7 @@ public class CuatroEnLinea {
 	columnaUltimaFicha = columna-1;
 	filaUltimaFicha = i-1;
 	}
-	
-	public void retrocederUnaJugada(){		
-		if(tablero[filaUltimaFicha][columnaUltimaFicha] != Casillero.VACIO){
-			tablero[filaUltimaFicha][columnaUltimaFicha] = Casillero.VACIO;	
-			turno = !turno;
-		}
-	}
-	
+
 	/**
 	 * post: indica si queda algun casillero libre o el tablero esta lleno.
 	 */
