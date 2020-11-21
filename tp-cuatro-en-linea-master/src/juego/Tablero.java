@@ -19,7 +19,7 @@ import javafx.stage.Stage;
  */
 public class Tablero {
 
-	private static final int ALTO_FILA = 85;
+	private static final int ALTO_FILA = 80;
 	private static final int ANCHO_COLUMNA = 80;
 	private static final int ALTURA_BOTON = 40;
 	private static final double RADIO = Math.min(ALTO_FILA - 1, ANCHO_COLUMNA - 1) / 2;
