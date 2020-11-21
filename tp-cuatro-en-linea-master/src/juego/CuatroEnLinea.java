@@ -25,7 +25,7 @@ public class CuatroEnLinea {
 	 * post: empieza el juego entre el jugador que tiene fichas rojas, identificado como 
 	 * 		 'jugadorRojo' y el jugador que tiene fichas amarillas, identificado como
 	 * 		 'jugadorAmarillo'. 
-	 * 		 Todo el tablero está vacío.
+	 * 		 Todo el tablero esta vacio.
 	 * 
 	 * @param filas : cantidad de filas que tiene el tablero.
 	 * @param columnas : cantidad de columnas que tiene el tablero.
@@ -46,8 +46,8 @@ public class CuatroEnLinea {
 	 * NO lo es, lo toma como valido y sino lo descarta.
 	 * 
 	 * @param numeroCandidato
-	 *            : numero candidato a columnas y filas máxima
-	 * @return devuelve numeroCandidato si cumple la condición
+	 *            : numero candidato a columnas y filas maxima
+	 * @return devuelve numeroCandidato si cumple la condicion
 	 */
 	private int esValido(int numeroCandidato) {
 		if (numeroCandidato < 4 || numeroCandidato > 15) {
@@ -58,14 +58,14 @@ public class CuatroEnLinea {
 	}
 	
 	/**
-	 * post: devuelve la cantidad máxima de fichas que se pueden apilar en el tablero.
+	 * post: devuelve la cantidad maxima de fichas que se pueden apilar en el tablero.
 	 */
 	public int contarFilas() {
 		return tablero.length;
 	}
 
 	/**
-	 * post: devuelve la cantidad máxima de fichas que se pueden alinear en el tablero.
+	 * post: devuelve la cantidad maxima de fichas que se pueden alinear en el tablero.
 	 */
 	public int contarColumnas() {
 		
@@ -73,14 +73,14 @@ public class CuatroEnLinea {
 	}
 
 		/**
-	 * pre : fila está en el intervalo [1, contarFilas()], columnas está en el
-	 * intervalo [1, contarColumnas()]. post: indica qué ocupa el casillero en
-	 * la posición dada por fila y columna.
+	 * pre : fila esta en el intervalo [1, contarFilas()], columnas esta en el
+	 * intervalo [1, contarColumnas()]. post: indica que ocupa el casillero en
+	 * la posicion dada por fila y columna.
 	 * 
 	 * @param fila
-	 *            : número de fila solicitado
+	 *            : numero de fila solicitado
 	 * @param columna
-	 *            : número de columna solicitado
+	 *            : numero de columna solicitado
 	 */
 	public Casillero obtenerCasillero(int fila, int columna) {
 		condicionParafila(fila);
@@ -113,25 +113,25 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * Post : Analiza si el número de columna sobrepasa la cantidad de columnas
+	 * Post : Analiza si el numero de columna sobrepasa la cantidad de columnas
 	 * máximas que tiene el tablero
 	 * 
 	 * @param columna
-	 *            : número de columna solicitada
+	 *            : numero de columna solicitada
 	 */
 	private void condicionParaColumna(int columna) {
 		if (columna < 1 || columna > tablero[0].length) {
-			throw new Error("La columna que está buscando no existe");
+			throw new Error("La columna que esta buscando no existe");
 		}
 	}
 
 	
 	/**
-	 * pre : el juego no terminó, columna está en el intervalo [1, contarColumnas()]
-	 * 		 y aún queda un Casillero.VACIO en la columna indicada. 
+	 * pre : el juego no termino, columna esta en el intervalo [1, contarColumnas()]
+	 * 		 y aun queda un Casillero.VACIO en la columna indicada. 
 	 * post: deja caer una ficha en la columna indicada.
 	 * 
-	 * @param columna : número de columna en la que se quiere soltar ficha
+	 * @param columna : numero de columna en la que se quiere soltar ficha
 	 */
 	public void soltarFichaEnColumna(int columna) {
 	condicionParaColumna(columna);	
@@ -156,8 +156,15 @@ public class CuatroEnLinea {
 	filaUltimaFicha = i-1;
 	}
 	
+	public void retrocederUnaJugada(){		
+		if(tablero[filaUltimaFicha][columnaUltimaFicha] != Casillero.VACIO){
+			tablero[filaUltimaFicha][columnaUltimaFicha] = Casillero.VACIO;	
+			turno = !turno;
+		}
+	}
+	
 	/**
-	 * post: indica si queda algún casillero libre o el tablero esta lleno.
+	 * post: indica si queda algun casillero libre o el tablero esta lleno.
 	 */
 	private boolean noHayCasillerosLibres(){
 		int i = 0;
@@ -295,8 +302,8 @@ public class CuatroEnLinea {
 	}
 	
 	/**
-	 * post: indica si el juego terminó porque uno de los jugadores
-	 * 		 ganó o no existen casilleros vacíos.
+	 * post: indica si el juego termino porque uno de los jugadores
+	 * 		 gano o no existen casilleros vacios.
 	 */
 	
 	public boolean termino() {
@@ -305,7 +312,7 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * post: indica si el juego terminó y tiene un ganador.
+	 * post: indica si el juego termino y tiene un ganador.
 	 */
 	public boolean hayGanador() {
 		
@@ -314,8 +321,8 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * pre : el juego terminó.
-	 * post: devuelve el nombre del jugador que ganó el juego.
+	 * pre : el juego termino.
+	 * post: devuelve el nombre del jugador que gano el juego.
 	 */
 	public String obtenerGanador() {
 		String ganador = null;
