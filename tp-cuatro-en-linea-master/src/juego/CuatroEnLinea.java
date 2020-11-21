@@ -1,7 +1,7 @@
 package juego;
 
 /**
- * Juego Cuatro en Lí­nea
+ * Juego Cuatro en Linea
  * 
  * Reglas:
  * 
