@@ -208,6 +208,14 @@ public class PruebaReglasCuatroEnLinea {
 		juego.soltarFichaEnColumna(6);
 		asertarQueEmpataron();
 	}
+
+         @Test
+	public void empatanEnTableroDe7Por7(){
+		juego = new CuatroEnLinea(7, 7, "Nati", "Fabi");
+		fueronSoltadasFichasEnColumnas(1,4,7,1,2,3,2,5,6,1,3,3,4,5,2,2,1,4,5,7,3,7,7,4,
+				6,5,4,5,3,5,5,6,6,7,2,1,3,3,2,6,6,1,2,1,7,7,4,4,6);
+		asertarQueEmpataron();
+	}
 	
 	@Test
 	public void empatanEnTableroDe4Por4() {
