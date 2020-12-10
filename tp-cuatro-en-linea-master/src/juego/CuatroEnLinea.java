@@ -152,7 +152,7 @@ public class CuatroEnLinea {
 		return ganador;
 	}
 
-	// MÉTODOS PRIVADOS
+	// METODOS PRIVADOS
 
 	/**
 	 * post: Analiza si el "numeroCandidato" es menor que 4 y mayor que 15, si
@@ -182,7 +182,7 @@ public class CuatroEnLinea {
 
 	/**
 	 * Pre : Fila debe estar en el intervalo [1 ; contarFilas()] Post : Analiza
-	 * si el número de fila se pasa del rango establecido, si es así lanza un
+	 * si el numero de fila se pasa del rango establecido, si es asi lanza un
 	 * error.
 	 * 
 	 * @param fila
@@ -196,7 +196,7 @@ public class CuatroEnLinea {
 
 	/**
 	 * Pre : Columna debe estar en el intervalo [1 ; contarColumnas()] Post :
-	 * Analiza si el número de columna se pasa del rango establecido, si es así
+	 * Analiza si el numero de columna se pasa del rango establecido, si es asi
 	 * lanza un error.
 	 * 
 	 * @param columna
@@ -209,7 +209,7 @@ public class CuatroEnLinea {
 	}
 
 	/**
-	 * Post : Analiza si el método termino() es igual a true, si es así, lanza
+	 * Post : Analiza si el metodo termino() es igual a true, si es asi, lanza
 	 * un error.
 	 */
 	private void comprobarSiElJuegoTermino() {
